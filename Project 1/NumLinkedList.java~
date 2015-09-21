@@ -1,0 +1,122 @@
+// Jonathan Parks jqp
+
+package eecs233project1;
+import eecs233project1.*;
+
+public class NumLinkedList implements NumList {
+
+	// Fields
+	public LLNode head;
+
+	// Constructors
+	public NumLinkedList() {
+		head = null;
+	}
+
+
+
+	// Methods
+	public int size() {
+		int size = 0;
+		LLNode currentNode = head;
+		while (currentNode != null && currentNode.nextNode != null) {
+			size++;
+			currentNode = currentNode.nextNode;
+		}
+		return size;
+	}
+
+	public void add(double value) {
+		LLNode currentNode = head;
+		while (currentNode != null && currentNode.nextNode != null) {
+			currentNode = currentNode.nextNode;
+		}
+		if (currentNode == null) currentNode = new LLNode(value);
+		else currentNode.nextNode = new LLNode(value);
+	}
+
+	public void insert(int i, double value) {
+		LLNode currentNode = head;
+		for (int j = 0; j < i; j++) {
+		if (currentNode != null && currentNode.nextNode != null) {
+				currentNode = currentNode.nextNode;
+			} else {
+				j = i;
+			}
+		}
+		currentNode.nextNode = new LLNode(value);
+	}
+
+	public void remove(int i) {
+		LLNode currentNode = head;
+		for (int j = 0; j < i-1; j++) {
+			if (currentNode != null && currentNode.nextNode != null) {
+				currentNode = currentNode.nextNode;
+			}
+		}
+		if (currentNode != null && currentNode.nextNode != null) {
+			currentNode.nextNode = currentNode.nextNode.nextNode;
+		}
+	}
+
+	public boolean contains(double value) {
+		LLNode currentNode = head;
+		while (currentNode != null) {
+			if (currentNode.value == value) return true;
+			currentNode = currentNode.nextNode;
+		}
+		return false;
+	}
+
+	public double lookup(int i) {
+		LLNode currentNode = head;
+		for (int j = 0; j < i; j++) {
+			if (currentNode != null) currentNode = currentNode.nextNode;
+		}
+		if (currentNode != null) return currentNode.value;
+		else throw new IllegalArgumentException("Index does not exist");
+	}
+
+	public boolean equals(NumList otherList) {
+		int thisSize = this.size();
+		try {
+			if (thisSize != otherList.size()) return false;
+			for (int i = 0; i < thisSize; i++) {
+				if (this.lookup(i) != otherList.lookup(i)) return false;
+			}
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+	}
+
+	public void removeDuplicates() {
+		NumLinkedList tempList = new NumLinkedList();
+		LLNode currentNode = head;
+		if (head != null) tempList.add(head.value);
+		while (currentNode != null && currentNode.nextNode != null) {
+			if (!tempList.contains(currentNode.nextNode.value)) {
+				tempList.add(currentNode.nextNode.value);
+				currentNode.nextNode = currentNode.nextNode.nextNode;
+			}
+			currentNode = currentNode.nextNode;
+		}
+	}
+
+	public String toString() {
+		StringBuilder output = new StringBuilder();
+		LLNode currentNode = head;
+		while (currentNode != null) {
+			output.append(Double.toString(currentNode.value));
+			currentNode = currentNode.nextNode;
+		}
+		return output.toString();
+	}
+
+
+
+	// Main method
+	public static void main(String[] args) {
+
+	}
+}

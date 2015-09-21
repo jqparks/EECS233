@@ -74,9 +74,16 @@ public class NumArrayList implements NumList {
 	}
 
 	public boolean equals(NumList otherList) {
-		int i = 0;
-		while (numArray[i] == otherList.lookup(i)) i++;	
-		return i == numElements;
+		int thisSize = this.size();
+		try {
+			if (thisSize != otherList.size()) return false;
+			for (int i = 0; i < thisSize; i++) {
+				if (this.lookup(i) != otherList.lookup(i)) return false;
+			}
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 	public void removeDuplicates() {

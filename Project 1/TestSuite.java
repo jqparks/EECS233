@@ -60,6 +60,19 @@ public class TestSuite {
 		}
 		System.out.println();
 
+		/* NumSet test */
+		System.out.println("========== NumSet test ==========");
+		NumSet testSet = new NumSet(new double[] {});
+		SetZero(testSet);
+		testSet = new NumSet(new double[] {1});
+		SetOne(testSet);
+		testSet = new NumSet(new double[] {1,1,2,3,5,8,13});
+		SetMany(testSet);
+		NumSet newSet = new NumSet(new double[] {1,4,9,16,25,36,49});
+		System.out.println(testSet.toString());
+		System.out.println(newSet.toString());
+		SetIntersectUnion(testSet, newSet);
+
 		System.out.println("========== End Test ==========");
 		System.out.println("    " + failCount + " failure(s)");
 	}
@@ -216,15 +229,43 @@ public class TestSuite {
 	}
 
 	private static void SetZero(NumSet set) {
-
+		System.out.print("size() zero case: ");
+		AssertTrue(set.size() == 0);
+		System.out.print("contains() zero case: ");
+		AssertFalse(set.contains(1));
+		System.out.print("toString() zero case: ");
+		AssertEquals(set.toString(), "");
 	}
 
 	private static void SetOne(NumSet set) {
-
+		System.out.print("size() one case: ");
+		AssertTrue(set.size() == 1);
+		System.out.print("contains() one case: ");
+		AssertFalse(set.contains(9));
+		System.out.print("contains() one case: ");
+		AssertTrue(set.contains(1));
+		System.out.print("toString() one case: ");
+		AssertEquals(set.toString(), "1.0");
 	}
 
 	private static void SetMany(NumSet set) {
+		System.out.print("size() many case: ");
+		AssertTrue(set.size() == 6);
+		System.out.print("contains() many case: ");
+		AssertFalse(set.contains(9));
+		System.out.print("conatins() many case: ");
+		AssertTrue(set.contains(13));
+		System.out.print("toString() many case: ");
+		AssertEquals(set.toString(), "1.0 2.0 3.0 5.0 8.0 13.0");
+	}
 
+	private static void SetIntersectUnion(NumSet S1, NumSet S2) {
+		NumSet intersect = NumSet.intersect(S1, S2);
+		NumSet union = NumSet.union(S1, S2);
+		System.out.print("intersect(): ");
+		AssertEquals(intersect.toString(), "1.0");
+		System.out.print("union(): ");
+		AssertEquals(union.toString(), "1.0 2.0 3.0 5.0 8.0 13.0 4.0 9.0 16.0 25.0 36.0 49.0");
 	}
 
 

@@ -1,5 +1,6 @@
 // Jonathan Parks jqp
 
+package eecs233project1;
 
 public class LLNode {
 

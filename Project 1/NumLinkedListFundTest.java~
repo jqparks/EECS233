@@ -85,19 +85,6 @@ public class NumLinkedListFundTest {
      * When you turn in your draft (and final) we will run our own test suite on your code 
      * and provide you with the feedback.
      */
-    
-    @Test
-    public void testInsertAndRemove() {
-      NumArrayList list = new NumArrayList();
-      list.insert(0,1);
-      assertTrue(list.size() == 1);
-      assertEquals("1.0", list.toString());
-      list.add(2);
-      list.add(3);
-      assertEquals("1.0 2.0 3.0", list.toString());
-      list.remove(1);
-      assertEquals("1.0 3.0", list.toString());
-    }
 
 }
 

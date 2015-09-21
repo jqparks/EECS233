@@ -40,7 +40,7 @@ public class NumArrayList implements NumList {
 			for (int i = 0; i < numElements; i++) tempArray[i] = numArray[i];
 			numArray = tempArray;
 		}
-		numArray[++numElements] = value;
+		numArray[numElements++] = value;
 	}
 
 	public void insert(int i, double value) {
@@ -48,7 +48,7 @@ public class NumArrayList implements NumList {
 		double[] tempArray = new double[capacity];
 		for (int j = 0; j < i; j++) tempArray[j] = numArray[j];
 		tempArray[i] = value;
-		for (int j = i+1; j < numElements; j++) tempArray[j] = numArray[j-1];
+		for (int j = i; j < numElements; j++) tempArray[j+1] = numArray[j];
 		numArray = tempArray;
 		numElements++;
 	}
@@ -74,9 +74,16 @@ public class NumArrayList implements NumList {
 	}
 
 	public boolean equals(NumList otherList) {
-		int i = 0;
-		while (numArray[i] == otherList.lookup(i)) i++;	
-		return i == numElements;
+		int thisSize = this.size();
+		try {
+			if (thisSize != otherList.size()) return false;
+			for (int i = 0; i < thisSize; i++) {
+				if (this.lookup(i) != otherList.lookup(i)) return false;
+			}
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
 	}
 
 	public void removeDuplicates() {
@@ -92,10 +99,10 @@ public class NumArrayList implements NumList {
 	}
 
 	public String toString() {
-		StringBuilder output = new StringBuilder();
+		String output = "";
 		for (int i = 0; i < numElements; i++) {
-			output.append(Double.toString(numArray[i]));
-			if (i < numElements-1) output.append(" ");
+			output += Double.toString(numArray[i]);
+			if (i < numElements-1) output += " ";
 		}
 		return output.toString();
 	}
@@ -104,6 +111,6 @@ public class NumArrayList implements NumList {
 
 	// Main method
 	public static void main(String[] args) {
-
+		System.out.println("Hello World");
 	}
 }

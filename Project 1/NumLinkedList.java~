@@ -18,10 +18,10 @@ public class NumLinkedList implements NumList {
 	// Methods
 	public int size() {
 		int size = 0;
-		LLNode currentNode = head;
-		while (currentNode != null && currentNode.nextNode != null) {
+		Iterator iter = new Iterator();
+		while (iter.hasNext()) {
 			size++;
-			currentNode = currentNode.nextNode;
+			iter.next();
 		}
 		return size;
 	}
@@ -31,20 +31,21 @@ public class NumLinkedList implements NumList {
 		while (currentNode != null && currentNode.nextNode != null) {
 			currentNode = currentNode.nextNode;
 		}
-		if (currentNode == null) currentNode = new LLNode(value);
+		if (currentNode == null) head = new LLNode(value);
 		else currentNode.nextNode = new LLNode(value);
 	}
 
 	public void insert(int i, double value) {
-		LLNode currentNode = head;
-		for (int j = 0; j < i; j++) {
-		if (currentNode != null && currentNode.nextNode != null) {
-				currentNode = currentNode.nextNode;
-			} else {
-				j = i;
+		if (i == 0 || head == null) head = new LLNode(value, head);
+		else {
+			LLNode current = head;
+			Iterator iter = new Iterator();
+			while (iter.hasNext() && i > 0) {
+				current = iter.nextNode();
+				i--;
 			}
+			current.nextNode = new LLNode(value, iter.nextNode());
 		}
-		currentNode.nextNode = new LLNode(value);
 	}
 
 	public void remove(int i) {
@@ -60,20 +61,19 @@ public class NumLinkedList implements NumList {
 	}
 
 	public boolean contains(double value) {
-		LLNode currentNode = head;
-		while (currentNode != null) {
-			if (currentNode.value == value) return true;
-			currentNode = currentNode.nextNode;
+		Iterator iter = new Iterator();
+		while (iter.hasNext()) {
+			if (iter.next() == value) return true;
 		}
 		return false;
 	}
 
 	public double lookup(int i) {
-		LLNode currentNode = head;
+		Iterator iter = new Iterator();
 		for (int j = 0; j < i; j++) {
-			if (currentNode != null) currentNode = currentNode.nextNode;
+			if (iter.hasNext()) iter.next();
 		}
-		if (currentNode != null) return currentNode.value;
+		if (iter.hasNext()) return iter.next();
 		else throw new IllegalArgumentException("Index does not exist");
 	}
 
@@ -104,15 +104,41 @@ public class NumLinkedList implements NumList {
 	}
 
 	public String toString() {
-		StringBuilder output = new StringBuilder();
-		LLNode currentNode = head;
-		while (currentNode != null) {
-			output.append(Double.toString(currentNode.value));
-			currentNode = currentNode.nextNode;
+		String output = "";
+		Iterator iter = new Iterator();
+		while (iter.hasNext()) {
+			output += Double.toString(iter.next());
+			if (iter.hasNext()) output += " ";
 		}
-		return output.toString();
+		return output;
 	}
 
+
+	// Iterator
+	private class Iterator {
+		private LLNode nextNode;
+		private Iterator() {
+			nextNode = head;
+		}
+
+		public boolean hasNext() {
+			return nextNode != null;
+		}
+
+		public double next() {
+			if (nextNode == null) throw new IllegalArgumentException();
+			double output = nextNode.value;
+			nextNode = nextNode.nextNode;
+			return output;
+		}
+
+		public LLNode nextNode() {
+			if (nextNode == null) return null;
+			LLNode output = nextNode;
+			nextNode = nextNode.nextNode;
+			return output;
+		}
+	}
 
 
 	// Main method

@@ -25,4 +25,6 @@ test:
 	$(JC) -cp $(JUNIT) $(TESTS)
 	java -cp /usr/share/java/junit4.jar:. org.junit.runner.JUnitCore $(TESTS:.java=)
 
-
+clear:
+	$(RM) *.class
+	$(RM) *.java~

@@ -84,5 +84,23 @@ public class NumSetTest {
     assertEquals("1.0 2.0 3.0 4.0", union.toString());
   }
   
-  
+	@Test
+	public void testEquivalence() {
+		NumSet set1 = new NumSet(new double[] {});
+		NumSet set2 = new NumSet(new double[] {});
+		// Zero case
+		assertTrue(NumSet.equivalence(set1, set2));
+		// Different sizes
+		set1 = new NumSet(new double[] {1});
+		set2 = new NumSet(new double[] {1,2});
+		assertFalse(NumSet.equivalence(set1, set2));
+		// Equal
+		set1 = new NumSet(new double[] {1,2,3});
+		set2 = new NumSet(new double[] {1,2,3});
+		assertTrue(NumSet.equivalence(set1, set2));
+		// Not equal
+		set1 = new NumSet(new double[] {1,3});
+		set2 = new NumSet(new double[] {1,2});
+		assertFalse(NumSet.equivalence(set1, set2));
+	}
 }

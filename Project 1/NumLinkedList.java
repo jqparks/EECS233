@@ -88,16 +88,14 @@ public class NumLinkedList implements NumList {
  }
 
  public void removeDuplicates() {
-  NumLinkedList tempList = new NumLinkedList();
-  LLNode currentNode = head;
-  if (head != null) tempList.add(head.value);
-  while (currentNode != null && currentNode.nextNode != null) {
-   if (!tempList.contains(currentNode.nextNode.value)) {
-    tempList.add(currentNode.nextNode.value);
-    currentNode.nextNode = currentNode.nextNode.nextNode;
+   NumLinkedList temp = new NumLinkedList();
+   for (int i = 0; i < this.size(); i++) {
+     if (!temp.contains(this.lookup(i))) {
+       temp.add(this.lookup(i));
+     } else {
+       this.remove(i);
+     }
    }
-   currentNode = currentNode.nextNode;
-  }
  }
 
  public String toString() {
@@ -135,11 +133,5 @@ public class NumLinkedList implements NumList {
    nextNode = nextNode.nextNode;
    return output;
   }
- }
-
-
- // Main method
- public static void main(String[] args) {
-
  }
 }

@@ -6,7 +6,7 @@ public class LLNode {
  public double value;
  public LLNode nextNode;
 
- // Constructor
+ // Constructors
  public LLNode(double value) {
   this.value = value;
   this.nextNode = null;

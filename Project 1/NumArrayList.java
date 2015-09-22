@@ -56,7 +56,7 @@ public class NumArrayList implements NumList {
   for (int j = 0; j < i; j++) tempArray[j] = numArray[j];
   for (int j = i+1; j < numElements; j++) tempArray[j-1] = numArray[j];
   numArray = tempArray;
-  numElements--;
+  if (numElements > 0) numElements--;
  }
 
  public boolean contains(double value) {
@@ -85,15 +85,14 @@ public class NumArrayList implements NumList {
  }
 
  public void removeDuplicates() {
-  double[] tempArray = new double[capacity];
-  int index = 0;
-  for (int i = 0; i < numElements; i++) {
-   for (int j = 0; j < i; j++) {
-    if (numArray[j] == numArray[i]) j = i;  // Break out of inner loop
-    if (j == i-1) tempArray[index++] = numArray[j];
+   NumArrayList temp = new NumArrayList();
+   for (int i = 0; i < numElements; i++) {
+     if (!temp.contains(numArray[i])) {
+       temp.add(numArray[i]);
+     } else {
+       this.remove(i);
+     }
    }
-  }
-  numArray = tempArray;
  }
 
  public String toString() {
@@ -103,12 +102,5 @@ public class NumArrayList implements NumList {
    if (i < numElements-1) output += " ";
   }
   return output.toString();
- }
-
-
-
- // Main method
- public static void main(String[] args) {
-  System.out.println("Hello World");
  }
 }

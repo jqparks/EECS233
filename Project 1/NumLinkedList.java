@@ -46,15 +46,18 @@ public class NumLinkedList implements NumList {
  }
 
  public void remove(int i) {
-  LLNode currentNode = head;
-  for (int j = 0; j < i-1; j++) {
-   if (currentNode != null && currentNode.nextNode != null) {
-    currentNode = currentNode.nextNode;
-   }
-  }
-  if (currentNode != null && currentNode.nextNode != null) {
-   currentNode.nextNode = currentNode.nextNode.nextNode;
-  }
+ 	Iterator iter = new Iterator();
+	iter.nextNode();
+	if (i == 0) head = iter.nextNode();
+	else {
+		LLNode current = head;
+		while (current != null && i > 1) {
+			current = iter.nextNode();
+			i--;
+		}
+		iter.nextNode();
+		current.nextNode = iter.nextNode();
+	}
  }
 
  public boolean contains(double value) {

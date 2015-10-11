@@ -1,11 +1,11 @@
 // Jonathan Parks jqp
 
-import java.util.LinkedList<E>;
+import java.util.LinkedList;
 
 public class HuffmanList {
 	
 	// Fields
-	private LinkedList<HuffmanNode> list = new LinkedList<HuffmanNode>;
+	private LinkedList<HuffmanNode> list = new LinkedList<HuffmanNode>();
 
 	// Constructor
 	public HuffmanList(byte[] input) {

@@ -17,11 +17,14 @@ public class HuffmanCode {
 
 	// Methods
 	public boolean[] code(byte b) {
+		return new boolean[] {true};
 	}
 
 	public String codeString(byte b) {
+		return null;
 	}
 
 	public String toString() {
+		return null;
 	}
 }

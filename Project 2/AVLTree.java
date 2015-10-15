@@ -11,12 +11,42 @@ public class AVLTree {
 
 
 
-	/* Methods */
+	/* Public methods */
 	// Helper method to insert a new element
 	public void insert(byte key) {
 		insertRecursive(key, this.root, null);
 	}
 
+	// Returns number of occurences of specified byte
+	public int getCount(byte b) {
+		Node desiredNode = findNode(this.root, b);
+		return (desiredNode != null) ? desiredNode.count : 0;
+	}
+
+	public void delete(byte b) {
+		Node toDelete = findNode(this.root, b);
+		if (toDelete != null) {
+			if (toDelete.left == null || toDelete.right == null) {
+				// Zero or one children
+				Node toDeleteChild = null;
+				Node parent = toDelete.parent;
+				if (toDelete.left != null) toDeleteChild = toDelete.left;
+				else toDeleteChild = toDelete.right;
+
+				if (toDelete == root) root = toDeleteChild;
+				else if (toDelete.key < parent.key) parent.left = toDeleteChild;
+				else parent.right = toDeleteChild;
+			} else {
+				// Two children
+				Node replacement = returnMin(toDelete.right);
+				delete(replacement.key);
+				toDelete.key = replacement.key;
+			}
+		}
+	}
+
+
+	/* Private methods */
 	private void insertRecursive(byte key, Node root, Node parent) {
 		if (root == null) {
 			root = new Node(key, parent);
@@ -36,7 +66,7 @@ public class AVLTree {
 
 	// Check and restore balance to the tree after insertion/deletion
 	private void balance(Node root) {
-		int newBalance = getHeight(root.left) - getHeight(root.right);
+		int newBalance = getHeight(root.right) - getHeight(root.left);
 		if (newBalance != root.balance) {
 			root.balance = newBalance;
 
@@ -56,6 +86,7 @@ public class AVLTree {
 		}
 	}
 
+	// Rotate around a specified node to restore balance
 	private boolean LeftRotation(Node y) {
 		if (y == null || y.right == null) return false;
 		Node z = y.right;
@@ -63,9 +94,11 @@ public class AVLTree {
 		y.right = z.left;
 		z.left = y;
 		y.parent = z;
+		if (z.parent == null) this.root = z;
 		return true;
 	}
 
+	// Rotate around a specified node to restore balance
 	private boolean RightRotation(Node z) {
 		if (z == null || z.left == null) return false;
 		Node y = z.left;
@@ -73,9 +106,11 @@ public class AVLTree {
 		z.left = y.right;
 		y.right = z;
 		z.parent = y;
+		if (y.parent == null) this.root = y;
 		return true;
 	}
 
+	// Returns number of levels in this subtree
 	private int getHeight(Node root) {
 		if (root == null) return -1;
 		int leftHeight = getHeight(root.left);
@@ -83,6 +118,29 @@ public class AVLTree {
 		return (leftHeight > rightHeight) ? leftHeight+1 : rightHeight+1;
 	}
 
+	// Locate a node based on the key stored in it
+	private Node findNode(Node root, byte b) {
+		if (root == null) 						// Value DNE
+			return null;
+		else if (root.key == b)					// Desired node located
+			return root;
+		else if (root.key < b)					// Continue search in right subtree
+			return findNode(root.right, b);
+		else									// Continue search in left subtree
+			return findNode(root.right, b);
+	}
+
+	// Return smallest value in tree
+	private Node returnMin(Node root) {
+		if (root.left == null) {
+			LeftRotation(root);
+			return root;
+		} else return returnMin(root.left);
+	}
+
+
+
+	/* Print methods */
 	// Return in-order traversal print-out of tree
 	public String inorder(Node root) {
 		String output = "";

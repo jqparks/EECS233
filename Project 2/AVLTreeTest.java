@@ -36,4 +36,14 @@ public class AVLTreeTest {
 		expect = "11 10 12 ";
 		assertEquals(expect, tree.preorder(tree.root));
 	}
+
+	@Test
+	public void testDelete() {
+		AVLTree tree = new AVLTree((byte)10);
+		tree.insert((byte)9);
+		tree.insert((byte)11);
+		assertEquals("10 9 11 ", tree.preorder(tree.root));
+		tree.delete((byte)10);
+		assertEquals("11 9 ", tree.preorder(tree.root));
+	}
 }

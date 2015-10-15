@@ -8,6 +8,7 @@ JUNIT = /usr/share/java/junit4.jar:.
 CLASSES = \
 	AVLTree.java \
 	ByteCounter.java \
+	Heap.java \
 	HuffmanNode.java \
 	HuffmanList.java \
 	HuffmanCode.java \

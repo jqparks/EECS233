@@ -5,18 +5,18 @@ import java.nio.file.*;
 public class ByteCounter {
 	
 	// Fields
-	byte[] array;
+	AVLTree byteCounter;
 	Order order = Order.Byte;
 
 	// Constructors
 	public ByteCounter(byte[] input) {
-		this.array = input;
+		UpdateADT(input);
 	}
 
 	public ByteCounter(String filename) {
 		// Read data from file in binary form
 		try {
-			this.array = Files.readAllBytes(Paths.get(filename));
+			UpdateADT(Files.readAllBytes(Paths.get(filename)));
 		} catch (Exception e) {	}
 	}
 
@@ -25,12 +25,16 @@ public class ByteCounter {
 	/* Methods */
 	// Return # of occurences of b
 	public int getCount(byte b) {
-		return 0;
+		return byteCounter.getCount(b);
 	}
 
 	// Return array of occurences of characters in b
 	public int[] getCount(byte[] b) {
-		return new int[] {0};
+		int[] counts = new int[b.length];
+		for (int i = 0; i < counts.length; i ++) {
+			counts[i] = byteCounter.getCount(b[i]);
+		}
+		return counts;
 	}
 
 	// Determines order of character output of toString() methods
@@ -61,6 +65,13 @@ public class ByteCounter {
 
 
 	/* Private methods */
+	private void UpdateADT(byte[] data) {
+		this.byteCounter = new AVLTree(data[0]);
+		for (int i = 1; i < data.length; i++) {
+			byteCounter.insert(data[i]);
+		}
+	}
+
 	private enum Order {
 		Byte, CountInc, CountDec
 	}

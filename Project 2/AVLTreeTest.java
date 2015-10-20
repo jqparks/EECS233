@@ -45,5 +45,40 @@ public class AVLTreeTest {
 		assertEquals("10 9 11 ", tree.preorder(tree.root));
 		tree.delete((byte)10);
 		assertEquals("11 9 ", tree.preorder(tree.root));
+
+		AVLTree tree2 = new AVLTree((byte)8);
+		for (int i = 9; i < 11; i++) {
+			tree2.insert((byte)i);
+		}
+		for (int i = 8; i < 11; i++) {
+			tree2.delete((byte)i);
+		}
+		assertEquals("126 ", tree2.preorder(tree2.root));
+	}
+
+	@Test
+	public void testCount() {
+		byte[] data = new byte[] {32,32,33,33,33,34};
+		AVLTree tree = new AVLTree(data[0]);
+		for (int i = 1; i < data.length; i++) {
+			tree.insert(data[i]);
+		}
+		assertEquals("33 32 34 ", tree.preorder(tree.root));
+		assertEquals(3, tree.getCount((byte)33));
+		assertEquals(0, tree.getCount((byte)35));
+	}
+
+	@Test
+	public void testGetElements() {
+		AVLTree tree = new AVLTree((byte)120);
+		byte[] expect = new byte[] {120};
+		byte[] actual = tree.getElements();
+		assertEquals(expect[0], actual[0]);
+		tree.insert((byte)121);
+		tree.insert((byte)122);
+		actual = tree.getElements();
+		assertEquals((byte)121, actual[0]);
+		assertEquals((byte)120, actual[1]);
+		assertEquals((byte)122, actual[2]);
 	}
 }

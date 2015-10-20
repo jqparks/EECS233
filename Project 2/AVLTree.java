@@ -199,7 +199,7 @@ public class AVLTree {
 			right = null;
 			this.parent = parent;
 			balance = 0;
-			count = 0;
+			count = 1;
 		}
 	}
 
@@ -225,11 +225,12 @@ public class AVLTree {
 			Node output = arr[first];
 			arr[first] = null;
 			if (++first == arr.length) first = 0;
+			total--;
 			return output;
 		}
 
 		protected boolean isEmpty() {
-			return (total == 0) ? true : false;
+			return total == 0;
 		}
 	}
 }

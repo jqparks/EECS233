@@ -107,13 +107,15 @@ public class NumLinkedListFundTest {
     
     @Test
     public void testRemove() {
-      NumArrayList list = new NumArrayList();
+      NumLinkedList list = new NumLinkedList();
       // Zero case
       list.remove(0);
       assertEquals("", list.toString());
       // One element case
       list.add(1);
       assertEquals("1.0", list.toString());
+	  list.remove(1);
+	  assertEquals("1.0", list.toString());
       list.remove(0);
       assertEquals("", list.toString());
       assertEquals(0, list.size());
@@ -124,6 +126,8 @@ public class NumLinkedListFundTest {
       assertEquals("1.0 2.0 3.0", list.toString());
       list.remove(1);
       assertEquals("1.0 3.0", list.toString());
+	  list.remove(0);
+	  assertEquals("3.0", list.toString());
     }
     
     @Test

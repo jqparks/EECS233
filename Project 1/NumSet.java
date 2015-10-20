@@ -58,7 +58,14 @@ public class NumSet {
  }
 
  // Extra Credit
- public boolean equivalence(NumSet S1, NumSet S2) {
-  return false;
+ public static boolean equivalence(NumSet S1, NumSet S2) {
+ 	int size = S1.size();
+	if (S2.size() != size) return false;
+	else {
+		for (int i = 0; i < size; i++) {
+			if (!S2.contains(S1.set.lookup(i))) return false;
+		}
+		return true;
+	}
  }
 }

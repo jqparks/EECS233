@@ -50,7 +50,10 @@ public class ByteCounter {
 
 	// Returns array of elements present, ordered by # occurences
 	public byte[] getElements() {
-		return null;
+		byte[] bytes = byteCounter.getElements();
+		int[] counts = getCount(bytes);
+		// Sort by counts
+		return counts;
 	}
 
 	// Return 

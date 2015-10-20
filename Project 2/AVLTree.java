@@ -1,5 +1,7 @@
 // Jonathan Parks jqp
 
+import java.util.*;
+
 public class AVLTree {
 	
 	public Node root;
@@ -21,6 +23,21 @@ public class AVLTree {
 	public int getCount(byte b) {
 		Node desiredNode = findNode(this.root, b);
 		return (desiredNode != null) ? desiredNode.count : 0;
+	}
+
+	// Returns array of tree
+	public byte[] getElements() {
+		byte[] output = new byte[256];
+		Queue queue = new Queue(this.root);
+		int i = 0;
+		while (!queue.isEmpty()) {
+			Node queueHead = queue.remove();
+			output[i] = queueHead.key;
+			i++;
+			if (queueHead.left != null) queue.add(queueHead.left);
+			if (queueHead.right != null) queue.add(queueHead.right);
+		}
+		return output;
 	}
 
 	public void delete(byte b) {
@@ -183,6 +200,36 @@ public class AVLTree {
 			this.parent = parent;
 			balance = 0;
 			count = 0;
+		}
+	}
+
+	// Implement a queue to store elements in tree in an array
+	private class Queue {
+		private Node[] arr = new Node[256];
+		private int total, first, next;
+
+		protected Queue(Node element) {
+			arr[0] = element;
+			total = 1;
+			first = 0;
+			next = 1;
+		}
+		
+		protected void add(Node element) {
+			arr[next++] = element;
+			if (next == arr.length) next = 0;
+			total++;
+		}
+
+		protected Node remove() {
+			Node output = arr[first];
+			arr[first] = null;
+			if (++first == arr.length) first = 0;
+			return output;
+		}
+
+		protected boolean isEmpty() {
+			return (total == 0) ? true : false;
 		}
 	}
 }

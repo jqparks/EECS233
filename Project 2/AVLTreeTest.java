@@ -45,15 +45,6 @@ public class AVLTreeTest {
 		assertEquals("10 9 11 ", tree.preorder(tree.root));
 		tree.delete((byte)10);
 		assertEquals("11 9 ", tree.preorder(tree.root));
-
-		AVLTree tree2 = new AVLTree((byte)8);
-		for (int i = 9; i < 11; i++) {
-			tree2.insert((byte)i);
-		}
-		for (int i = 8; i < 11; i++) {
-			tree2.delete((byte)i);
-		}
-		assertEquals("126 ", tree2.preorder(tree2.root));
 	}
 
 	@Test
@@ -64,6 +55,7 @@ public class AVLTreeTest {
 			tree.insert(data[i]);
 		}
 		assertEquals("33 32 34 ", tree.preorder(tree.root));
+		assertEquals(2, tree.getCount((byte)32));
 		assertEquals(3, tree.getCount((byte)33));
 		assertEquals(0, tree.getCount((byte)35));
 	}

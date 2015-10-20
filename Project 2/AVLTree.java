@@ -144,7 +144,7 @@ public class AVLTree {
 		else if (root.key < b)					// Continue search in right subtree
 			return findNode(root.right, b);
 		else									// Continue search in left subtree
-			return findNode(root.right, b);
+			return findNode(root.left, b);
 	}
 
 	// Return smallest value in tree

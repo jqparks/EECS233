@@ -11,5 +11,9 @@ public class HuffmanNode {
 
 	// Constructor
 	public HuffmanNode(byte b, int c) {
+		this.b = b;
+		this.count = c;
+		this.left = null;
+		this.right = null;
 	}
 }

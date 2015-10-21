@@ -52,7 +52,7 @@ public class ByteCounter {
 	public byte[] getElements() {
 		byte[] bytes = byteCounter.getElements();
 		int[] counts = getCount(bytes);
-		mergeSort(bytes, counts, 0, bytes.length);
+		mergeSort(bytes, counts, 0, bytes.length-1);
 		return bytes;
 	}
 

@@ -27,15 +27,19 @@ public class AVLTree {
 
 	// Returns array of tree
 	public byte[] getElements() {
-		byte[] output = new byte[256];
+		byte[] values = new byte[256];
 		Queue queue = new Queue(this.root);
 		int i = 0;
 		while (!queue.isEmpty()) {
 			Node queueHead = queue.remove();
-			output[i] = queueHead.key;
+			values[i] = queueHead.key;
 			i++;
 			if (queueHead.left != null) queue.add(queueHead.left);
 			if (queueHead.right != null) queue.add(queueHead.right);
+		}
+		byte[] output = new byte[i];
+		for (int j = 0; j < output.length; j++) {
+			output[j] = values[j];
 		}
 		return output;
 	}

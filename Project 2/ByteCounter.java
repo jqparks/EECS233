@@ -58,11 +58,31 @@ public class ByteCounter {
 
 	// Return string with order selected by setOrder(), or default by increasing byte
 	public String toString() {
-		return byteCounter.preorder(byteCounter.root);
+		byte[] elements = getElements();
+		int[] counts = getCount(elements);
+		String output = "";
+		for (int i = 0; i < elements.length; i++) {
+			output += elements[i];
+			output += ":";
+			output += counts[i];
+			if (i != elements.length - 1)
+				output += " ";
+		}
+		return output;
 	}
 
 	public String toString(String format) {
-		return null;
+		byte[] elements = getElements();
+		int[] counts = getCount(elements);
+		String output = "";
+		for (int i = 0; i < elements.length; i++) {
+			output += new String(new byte[] {elements[i]});
+			output += ":";
+			output += counts[i];
+			if (i != elements.length - 1)
+				output += " ";
+		}
+		return output;
 	}
 
 

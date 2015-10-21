@@ -3,9 +3,22 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
+import java.nio.file.*;
 
 public class ByteCounterTest {
 	
+	@Test
+	public void testStringConstructor() {
+		String filename = "test2.txt";
+		ByteCounter counter = new ByteCounter(filename);
+		byte[] fileBytes = new byte[] {};
+		try{
+			fileBytes = Files.readAllBytes(Paths.get(filename));
+		} catch (Exception e) { }
+		ByteCounter counter2 = new ByteCounter(fileBytes);
+		//System.out.println(counter2.toString());
+	}
+
 	@Test
 	public void testCount() {
 		byte[] arr = new byte[] {32,32,44,55};
@@ -59,6 +72,43 @@ public class ByteCounterTest {
 	public void testSetOrderThrowsException() {
 		ByteCounter counter = new ByteCounter(new byte[] {11});
 		counter.setOrder("not a valid input");
+	}
+
+	@Test
+	public void testToString() {
+		byte[] elements = new byte[] {65,65,66,66,66,67};
+		ByteCounter counter = new ByteCounter(elements);
+		String expect = "65:2 66:3 67:1";
+		String expectChar = "A:2 B:3 C:1";
+		assertEquals(expect, counter.toString());
+		assertEquals(expectChar, counter.toString("char"));
+		counter.setOrder("countInc");
+		expect = "67:1 65:2 66:3";
+		expectChar = "C:1 A:2 B:3";
+		assertEquals(expect, counter.toString());
+		assertEquals(expectChar, counter.toString("char"));
+		counter.setOrder("countDec");
+		expect = "66:3 65:2 67:1";
+		expectChar = "B:3 A:2 C:1";
+		assertEquals(expect, counter.toString());
+		assertEquals(expectChar, counter.toString("char"));
+	}
+
+	@Test
+	public void longTestToString() {
+		byte[] elements = new byte[9999];
+		int k = 0;
+		for (int i = 67; i < 127; i++) {
+			for (int j = 67; j < i; j++) {
+				elements[k] = (byte)i;
+				k++;
+			}
+		}
+		ByteCounter counter = new ByteCounter(elements);
+		byte[] retrievedElements = counter.getElements();
+		for (int i = 0; i < retrievedElements.length; i++) {
+			System.out.print(""+counter.toString()+" ");
+		}
 	}
 }
 

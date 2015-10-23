@@ -111,11 +111,15 @@ public class AVLTree {
 	private boolean LeftRotation(Node y) {
 		if (y == null || y.right == null) return false;
 		Node z = y.right;
+		Node x = y.parent;
 		z.parent = y.parent;
 		y.right = z.left;
 		z.left = y;
-		y.parent = z;
-		if (z.parent == null) this.root = z;
+		x = z;
+		if (x != null) {
+			if (x.key < y.key) x.right = z;
+			else x.left = z;
+		} else this.root = z;
 		return true;
 	}
 
@@ -123,11 +127,15 @@ public class AVLTree {
 	private boolean RightRotation(Node z) {
 		if (z == null || z.left == null) return false;
 		Node y = z.left;
+		Node x = z.parent;
 		y.parent = z.parent;
 		z.left = y.right;
 		y.right = z;
-		z.parent = y;
-		if (y.parent == null) this.root = y;
+		x = y;
+		if (x != null) {
+			if (x.key < y.key) x.right = z;
+			else x.left = z;
+		} else this.root = y;
 		return true;
 	}
 

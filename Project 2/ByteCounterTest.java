@@ -9,14 +9,10 @@ public class ByteCounterTest {
 	
 	@Test
 	public void testStringConstructor() {
-		String filename = "test2.txt";
+		String filename = "test.txt";
 		ByteCounter counter = new ByteCounter(filename);
-		byte[] fileBytes = new byte[] {};
-		try{
-			fileBytes = Files.readAllBytes(Paths.get(filename));
-		} catch (Exception e) { }
-		ByteCounter counter2 = new ByteCounter(fileBytes);
-		//System.out.println(counter2.toString());
+		String expect = "A:1 B:1 C:1 D:1 E:1 F:1 G:1 H:1 I:1 J:1 K:1";
+		assertEquals(expect, counter.toString());
 	}
 
 	@Test
@@ -105,10 +101,6 @@ public class ByteCounterTest {
 			}
 		}
 		ByteCounter counter = new ByteCounter(elements);
-		byte[] retrievedElements = counter.getElements();
-		for (int i = 0; i < retrievedElements.length; i++) {
-			System.out.print(""+counter.toString()+" ");
-		}
 	}
 }
 

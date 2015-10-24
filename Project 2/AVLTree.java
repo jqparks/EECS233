@@ -133,8 +133,8 @@ public class AVLTree {
 		y.right = z;
 		z.parent = y;
 		if (x != null) {
-			if (x.key < y.key) x.right = z;
-			else x.left = z;
+			if (x.key < y.key) x.right = y;
+			else x.left = y;
 		} else this.root = y;
 		return true;
 	}

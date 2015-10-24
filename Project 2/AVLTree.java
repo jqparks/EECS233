@@ -112,10 +112,10 @@ public class AVLTree {
 		if (y == null || y.right == null) return false;
 		Node z = y.right;
 		Node x = y.parent;
-		z.parent = y.parent;
+		z.parent = x;
 		y.right = z.left;
 		z.left = y;
-		x = z;
+		y.parent = z;
 		if (x != null) {
 			if (x.key < y.key) x.right = z;
 			else x.left = z;
@@ -128,10 +128,10 @@ public class AVLTree {
 		if (z == null || z.left == null) return false;
 		Node y = z.left;
 		Node x = z.parent;
-		y.parent = z.parent;
+		y.parent = x;
 		z.left = y.right;
 		y.right = z;
-		x = y;
+		z.parent = y;
 		if (x != null) {
 			if (x.key < y.key) x.right = z;
 			else x.left = z;

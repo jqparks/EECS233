@@ -115,6 +115,7 @@ public class AVLTree {
 		Node x = y.parent;
 		z.parent = x;
 		y.right = z.left;
+		z.left.parent = y;
 		z.left = y;
 		y.parent = z;
 		if (x != null) {
@@ -131,6 +132,7 @@ public class AVLTree {
 		Node x = z.parent;
 		y.parent = x;
 		z.left = y.right;
+		y.right.parent = z;
 		y.right = z;
 		z.parent = y;
 		if (x != null) {

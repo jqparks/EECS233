@@ -89,8 +89,6 @@ public class AVLTree {
 	private void balance(Node root) {
 		int newBalance = getHeight(root.right) - getHeight(root.left);
 		if (newBalance != root.balance) {
-			root.balance = newBalance;
-
 			// Do rotations to restore balance, checking for double rotations
 			if (newBalance > 1) {
 				if (root.right != null && root.right.balance < 0)
@@ -101,6 +99,9 @@ public class AVLTree {
 					LeftRotation(root.left);
 				RightRotation(root);
 			}
+
+			newBalance = getHeight(root.right) - getHeight(root.left);
+			root.balance = newBalance;
 
 			// Recursively call function to balance ancestors
 			if (root.parent != null) balance(root.parent);

@@ -1,5 +1,6 @@
 // Jonathan Parks jqp
 
+import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.LinkedList;
 
@@ -48,20 +49,33 @@ public class HuffmanList {
 		}
 
 		// Add elements based on count, ordered by increasing count
-		list.add(new HuffmanNode(characters[0], counts[0]));
-		for (int i = 1; i < characters.length; i++) {
-			ListIterator<HuffmanNode> iter = list.listIterator(0);
-			HuffmanNode currentNode = iter.next();
-			while (currentNode != null && counts[i] > currentNode.count) {
-				currentNode = iter.next();
-			}
-			if (currentNode != null && counts[i] == currentNode.count) {
-				if (characters[i] < currentNode.b) {
-					iter.previous();
-				}
-			}
-			iter.add(new HuffmanNode(characters[i], counts[i]));
+		counter.setOrder("countInc");
+		for (int i = 0; i < characters.length; i++) {
+			HuffmanNode newNode = new HuffmanNode(characters[i], counts[i]);
+			list.add(newNode);
 		}
+	}
+
+
+
+	/* methods */
+	public HuffmanNode peek() { return list.peek(); }
+	public int size() { return list.size(); }
+	public HuffmanNode poll() { return list.poll(); }
+	public HuffmanNode get(int index) { return list.get(index); }
+	public void add(int index, HuffmanNode node) { list.add(index, node); }
+
+
+
+	// Main method
+	public static void main(String[] args) {
+		byte[] arr = new byte[] {60,60,60,60,61,61,61,62,62,63};
+		HuffmanList list = new HuffmanList(arr);
+		System.out.println("size: " + list.size());
+		HuffmanNode front = list.peek();
+		System.out.println("front key: " + front.b);
+		HuffmanNode three = list.get(2);
+		System.out.println("Third element: " + three.b);
 	}
 }
 

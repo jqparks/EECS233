@@ -15,7 +15,8 @@ CLASSES = \
 
 TESTS = \
 	AVLTreeTest.java \
-	ByteCounterTest.java
+	ByteCounterTest.java \
+	HuffmanCodeTest.java
 
 default:classes
 

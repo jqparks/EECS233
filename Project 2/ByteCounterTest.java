@@ -9,10 +9,10 @@ public class ByteCounterTest {
 	
 	@Test
 	public void testStringConstructor() {
-		String filename = "test.txt";
+		String filename = "test2.txt";
 		ByteCounter counter = new ByteCounter(filename);
-		String expect = "A:1 B:1 C:1 D:1 E:1 F:1 G:1 H:1 I:1 J:1 K:1";
-		assertEquals(expect, counter.toString());
+		String expect = "\n:1 A:1 B:1 C:1 D:1 E:1 F:1 G:1 H:1 I:1 J:1 K:1";
+		assertEquals(expect, counter.toString("char"));
 	}
 
 	@Test

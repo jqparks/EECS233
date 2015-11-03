@@ -6,66 +6,76 @@ public class HuffmanCode {
 
 	// Fields
 	HuffmanList tree = null;
-	HuffmanNode[] elements;
+	byte[] elements;
+	String[] codes;
 	int index;
 
 	// Constructors
 	public HuffmanCode(byte[] input) {
 		tree = new HuffmanList(input);
-		elements = new HuffmanNode[tree.size()];
+		elements = new byte[tree.size()];
+		codes = new String[tree.size()];
 		
 		makeTree();
-		encode(tree.peek(), new boolean[] {});
+		encode(tree.peek(), "");
 	}
 
 	public HuffmanCode(String filename) {
 		tree = new HuffmanList(filename);
-		elements = new HuffmanNode[tree.size()];
+		elements = new byte[tree.size()];
+		codes = new String[tree.size()];
 
 		makeTree();
-		encode(tree.peek(), new boolean[] {});
+		encode(tree.peek(), "");
 	}
 
 	public HuffmanCode(byte[] characters, int[] counts) {
 		tree = new HuffmanList(characters, counts);
-		elements = new HuffmanNode[tree.size()];
+		elements = new byte[tree.size()];
+		codes = new String[tree.size()];
 
 		makeTree();
-		encode(tree.peek(), new boolean[] {});
+		encode(tree.peek(), "");
 	}
 
 
 
 	// Methods
 	public boolean[] code(byte b) {
-		for (HuffmanNode node : elements) {
-			if (node.b == b) return node.code;
+		for (int i = 0; i < elements.length; i++) {
+			if (elements[i] == b) {
+				boolean[] output = new boolean[codes[i].length()];
+				for (int j = 0; j < codes[i].length(); j++) {
+					char aChar = codes[i].charAt(j);
+					if (aChar == 1) output[j] = true;
+					else output[j] = false;
+				}
+				return output;
+			}
 		}
 		// Searched whole list of elements, not present
 		throw new IllegalArgumentException();
 	}
 
 	public String codeString(byte b) {
-		boolean[] code = new boolean[] {};
-		try {
-			code = code(b);
-		} catch (Exception e) { throw e; }
-		return boolToString(code);
+		for (int i = 0; i < elements.length; i++) {
+			if (elements[i] == b) return codes[i];
+		}
+		// Searched whole list of elements, not present
+		throw new IllegalArgumentException();
 	}
 
 	public String toString() {
+		// Implement a queue here to display shortest codes first
 		String output = "";
-		for (HuffmanNode node : elements) {
-			if (node != null) {
-				output += node.b;
-				output += ": ";
-				output += boolToString(node.code);
-				output += "\n";
-			}
+		for (byte element : elements) {
+			output += element;
+			output += ": ";
+			output += codeString(element);
+			output += "\n";
 		}
 		return output;
 	}
-
 
 	// Private methods
 	private void makeTree() {
@@ -78,6 +88,8 @@ public class HuffmanCode {
 			// Create a new node that represents their sum
 			int sum = element1.count + element2.count;
 			HuffmanNode sumNode = new HuffmanNode((byte)0, sum);
+			element1.code = new boolean[] { false };
+			element2.code = new boolean[] { true };
 			sumNode.left = element1;
 			sumNode.right = element2;
 
@@ -90,33 +102,25 @@ public class HuffmanCode {
 		}
 	}
 
-	private void encode(HuffmanNode root, boolean[] code) {
+	private void encode(HuffmanNode root, String code) {
 		if (root.left == null && root.right == null) {
-			root.code = code;
-			elements[this.index++] = root;
+			boolean[] boolcode = new boolean[code.length()];
+			for (int i = 0; i < code.length(); i++) {
+				if (code.charAt(i) == 49) boolcode[i] = true;
+				else boolcode[i] = false;
+			}
+			root.code = boolcode;
+			codes[this.index] = code;
+			elements[this.index++] = root.b;
 		} else {
-			boolean[] newCode = new boolean[code.length+1];
-			System.arraycopy(code, 0, newCode, 0, code.length);
 			if (root.left != null) {
-				newCode[newCode.length-1] = false;
-				encode(root.left, newCode);
+				encode(root.left, code + "0");
 			}
 			if (root.right != null) {
-				newCode[newCode.length-1] = true;
-				encode(root.right, newCode);
+				encode(root.right, code + "1");
 			}
 		}
 	}
-
-	private String boolToString(boolean[] data) {
-		String output = "";
-		for (boolean datum : data) {
-			if (datum) output += "1";
-			else output += "0";
-		}
-		return output;
-	}
-
 
 
 	// Main method
@@ -135,10 +139,42 @@ public class HuffmanCode {
 		return elements.length;
 	}
 	private byte get(int index) {
-		return elements[index].b;
+		return elements[index];
 	}
 	private HuffmanList getList() {
 		return this.tree;
+	}
+
+
+	// Implement a queue to store elements in tree in an array
+	private class Queue {
+		private HuffmanNode[] arr = new HuffmanNode[256];
+		private int total, first, next;
+
+		protected Queue(HuffmanNode element) {
+			arr[0] = element;
+			total = 1;
+			first = 0;
+			next = 1;
+		}
+		
+		protected void add(HuffmanNode element) {
+			arr[next++] = element;
+			if (next == arr.length) next = 0;
+			total++;
+		}
+
+		protected HuffmanNode remove() {
+			HuffmanNode output = arr[first];
+			arr[first] = null;
+			if (++first == arr.length) first = 0;
+			total--;
+			return output;
+		}
+
+		protected boolean isEmpty() {
+			return total == 0;
+		}
 	}
 }
 

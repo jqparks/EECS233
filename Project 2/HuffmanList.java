@@ -64,7 +64,7 @@ public class HuffmanList {
 	public HuffmanNode poll() { return list.poll(); }
 	public HuffmanNode get(int index) { return list.get(index); }
 	public void add(int index, HuffmanNode node) { list.add(index, node); }
-
+	public Iterator<HuffmanNode> iterator() { return list.iterator(); }
 
 
 	// Main method

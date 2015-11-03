@@ -16,7 +16,12 @@ CLASSES = \
 TESTS = \
 	AVLTreeTest.java \
 	ByteCounterTest.java \
-	HuffmanCodeTest.java
+	HuffmanCodeTest.java \
+	ByteCounterFundTest.java \
+	HuffmanCodeFundTest.java \
+	HuffmanCoderFundTest.java \
+	HuffmanListFundTest.java \
+	HuffmanNodeFundTest.java
 
 default:classes
 
